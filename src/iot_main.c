@@ -541,6 +541,10 @@ static iot_error_t _do_state_updating(struct iot_context *ctx, iot_state_t new_s
 		case IOT_STATE_INITIALIZED :
 			break;
 		case IOT_STATE_PROV_SLEEP :
+			if (ctx->status_maps & IOT_STATUS_IDLE) {
+				ctx->status_cb(IOT_STATUS_IDLE, IOT_STAT_LV_STAY, ctx->status_usr_data);
+				ctx->reported_stat = IOT_STATUS_IDLE | IOT_STAT_LV_STAY << 8;
+			}
 			break;
 		case IOT_STATE_PROV_ENTER :
 			if (ctx->status_maps & IOT_STATUS_PROVISIONING) {
